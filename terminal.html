@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>root@system:~#</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+body {
+    background: black;
+    color: #00ff88;
+    font-family: 'Share Tech Mono', monospace;
+    padding: 20px;
+    font-size: 16px;
+}
+
+#terminal {
+    max-width: 900px;
+}
+
+.line {
+    white-space: pre-wrap;
+}
+
+.input-line {
+    display: flex;
+}
+
+.prompt {
+    margin-right: 5px;
+}
+
+input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #00ff88;
+    font-family: inherit;
+    font-size: inherit;
+    width: 100%;
+}
+</style>
+</head>
+<body>
+
+<div id="terminal">
+    <div class="line">Welcome to Tharun's portfolio</div>
+    <div class="line">Type <b>--help</b> to see available commands.</div>
+</div>
+
+<div class="input-line">
+    <span class="prompt">root@system:~#</span>
+    <input type="text" id="commandInput" autofocus>
+</div>
+
+<script>
+const terminal = document.getElementById("terminal");
+const input = document.getElementById("commandInput");
+
+const commands = {
+    "--help": () => `
+Available commands:
+  --help          Show this help menu
+  whoami          Shows about me
+  ls              List's more secret
+  cat flag.txt    reveals my true identity
+  clear           Clear the terminal
+`,
+
+    "whoami": () => 'I am THARUN_T, currently pursuing my studies in cybersecurity. A CTF learner exploring more stuffs around this field on my journey . Outside the terminal, I m intrested to play lots of phisical activities sports{volleyball_chess_carrom_esports}. Breaking to learn. Learning to secure.'
+,
+
+    "ls": () => `
+flag.txt
+linkedin
+github
+`,
+
+    "cat flag.txt": () => "FLAG{b29wcyEhIHlvdSBnb3QgbWUgLi4uIG15SW5zdGFncmFtSWQ6MDNfdGhhcnVuX3Q=}",
+
+    "clear": () => "CLEAR" , 
+
+    "linkedin ": () => "https://www.linkedin.com/in/tharun-hack" , 
+
+    "github" : () => "https://github.com/THARUNT226"
+};
+
+function printLine(text) {
+    text.split("\n").forEach(line => {
+        const div = document.createElement("div");
+        div.className = "line";
+        div.textContent = line;
+        terminal.appendChild(div);
+    });
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        const command = input.value.trim();
+        printLine(`root@system:~# ${command}`);
+
+        if (commands[command]) {
+            const output = commands[command]();
+            if (output === "CLEAR") {
+                terminal.innerHTML = "";
+            } else {
+                printLine(output);
+            }
+        } else {
+            printLine(`command not found: ${command}`);
+        }
+
+        input.value = "";
+    }
+});
+</script>
+
+</body>
+</html>
+

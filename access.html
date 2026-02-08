@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Granted</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        body {
+            background: black;
+            color: #00ff88;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 28px;
+            overflow: hidden;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        #cursor {
+            display: inline-block;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+
+        #enter {
+            margin-top: 20px;
+            font-size: 18px;
+            opacity: 0;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div>
+        <span id="text"></span><span id="cursor">█</span>
+    </div>
+    <div id="enter">Press ENTER to continue</div>
+</div>
+
+<script>
+    const message = "ACCESS GRANTED";
+    let index = 0;
+    const speed = 120;
+    const textElement = document.getElementById("text");
+    const enterText = document.getElementById("enter");
+
+    function typeText() {
+        if (index < message.length) {
+            textElement.textContent += message.charAt(index);
+            index++;
+            setTimeout(typeText, speed);
+        } else {
+            // show ENTER prompt
+            enterText.style.opacity = 1;
+            enterText.style.animation = "blink 1.2s infinite";
+            listenForEnter();
+        }
+    }
+
+    function listenForEnter() {
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                window.location.href = "terminal.html";
+            }
+        });
+    }
+
+    typeText();
+</script>
+
+</body>
+</html>
+
+
